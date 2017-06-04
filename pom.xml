@@ -134,9 +134,6 @@
             <!-- Spring Boot Actuator displays build-related information 
               if a META-INF/build-info.properties file is present -->
             <goals>
-              <goal>build-info</goal>
-            </goals>
-            <goals>
                 <goal>repackage</goal>
             </goals>
             <configuration>
