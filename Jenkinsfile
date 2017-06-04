@@ -13,7 +13,6 @@ pipeline {
             steps {
                 script {
                     sh './mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V'
-                    }
                 }
             }
         }
@@ -22,7 +21,6 @@ pipeline {
                 script {
                     sh './mvnw test -B'
                     junit 'target/surefire-reports/*.xml'
-                    }
                 }
             }
         }
