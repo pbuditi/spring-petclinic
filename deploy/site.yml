@@ -1,0 +1,32 @@
+---
+# connector deployment
+
+- name: deploys the application
+  hosts: all
+  remote_user: cloud-user
+  vars:
+    timestamp: ""
+
+  tasks:
+    - name: copies the jar file over
+      copy: src=app.jar dest=/home/cloud-user/app-.jar
+
+    - name: unlink the current app
+      file: path=/home/cloud-user/app.jar state=absent
+
+    - name: link to the newly deployed app
+      file: path=/home/cloud-user/app.jar src=/home/cloud-user/app-.jar state=link
+
+    - name: stops running app
+      sudo: yes
+      service: name=app state=stopped
+
+    - name: starts the app
+      sudo: yes
+      service: name=app state=started
+
+    - name: send notification message via slack
+      local_action:
+        module: slack
+        token: <your slack token>
+        msg: "app completed deployment."
