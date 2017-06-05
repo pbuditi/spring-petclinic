@@ -4,7 +4,7 @@ pipeline {
         pollSCM("")
     }
     stages {
-        stage("Prepare environment") {
+        stage("Checkut") {
             steps {
                 checkout scm
             }
@@ -24,13 +24,11 @@ pipeline {
                 }
             }
         }
-        stage("Cleanup") {
-            steps{
-                script {
-                    deleteDir()
-                    // after the push to nexus, we need to clean-up the docker image on the server
-                }
-            }
+    }
+    post {
+        always {
+            junit '*/target/surefire-reports/*.xml'
+            archive "target/*.jar"
         }
     }
 }
