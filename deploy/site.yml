@@ -28,12 +28,12 @@
 
     - name: stops running app
       sudo: yes
-      shell: stop-app.sh
+      shell: /home/cloud-user/petclinic/stop-app.sh
       args:
         chdir: /home/cloud-user/petclinic/
 
     - name: starts the app
       sudo: yes
-      shell: start-app.sh
+      shell: /home/cloud-user/petclinic/start-app.sh
       args:
         chdir: /home/cloud-user/petclinic/
