@@ -38,5 +38,5 @@
     - name: Send notification message via Slack all options
       slack:
         token: "T02592CKJ/B5NSGD0Q4/HVtCwONm8vSrFayNVOLZnudT"
-        msg: "petclinic-integration deployment completed on {{ inventory_hostname }}"
+        msg: "petclinic-integration deployment completed: http://{{ inventory_hostname }}:8099"
         username: 'PaloIT DevOps'
