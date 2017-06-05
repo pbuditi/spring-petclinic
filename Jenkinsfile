@@ -24,6 +24,9 @@ pipeline {
             }
         }
         stage("SonarQube analysis") {
+            script {
+                   echo "SonarQube Analysis" 
+            }
       }
   }
     post {
