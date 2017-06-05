@@ -9,7 +9,7 @@
 
   tasks:
     - name: copies the jar file over
-      copy: src=app.jar dest=/home/cloud-user/app-.jar
+      copy: src=../target/app.jar dest=/home/cloud-user/app-.jar
 
     - name: unlink the current app
       file: path=/home/cloud-user/app.jar state=absent
