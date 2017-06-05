@@ -36,8 +36,7 @@
         chdir: /home/cloud-user/petclinic/
         
     - name: send notification message via slack
-      local_action:
-          module: slack
-          token: "T02592CKJ/B5NSGD0Q4/HVtCwONm8vSrFayNVOLZnudT"
-          msg: "petclinic deployment completed on {{ inventory_hostname }}"
-          channel: #devops-cloud-demo
+      module: slack
+      token: "T02592CKJ/B5NSGD0Q4/HVtCwONm8vSrFayNVOLZnudT"
+      msg: "petclinic deployment completed on {{ inventory_hostname }}"
+      channel: #devops-cloud-demo
