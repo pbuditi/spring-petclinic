@@ -35,8 +35,8 @@
       args:
         chdir: /home/cloud-user/petclinic/
         
-    - name: send notification message via slack
-      module: slack
-      token: "T02592CKJ/B5NSGD0Q4/HVtCwONm8vSrFayNVOLZnudT"
-      msg: "petclinic deployment completed on {{ inventory_hostname }}"
-      channel: #devops-cloud-demo
+    - name: Send notification message via Slack all options
+      slack:
+        token: "T02592CKJ/B5NSGD0Q4/HVtCwONm8vSrFayNVOLZnudT"
+        msg: "petclinic-integration deployment completed"
+        username: 'Ansible'
