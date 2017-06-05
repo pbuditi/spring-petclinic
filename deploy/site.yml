@@ -9,7 +9,7 @@
 
   tasks:
     - name: create the app directory
-      file: path=/home/cloud-user/pteclinic state=directory
+      file: path=/home/cloud-user/petclinic state=directory
       
     - name: copies the startup script
       copy: src=start-app.sh dest=/home/cloud-user/petclinic
@@ -18,13 +18,13 @@
       copy: src=stop-app.sh dest=/home/cloud-user/petclinic
       
     - name: copies the jar file over
-      copy: src=../target/app.jar dest=/home/cloud-user/app-.jar
+      copy: src=../target/app.jar dest=/home/cloud-user/petclinic/app-.jar
 
     - name: unlink the current app
-      file: path=/home/cloud-user/app.jar state=absent
+      file: path=/home/cloud-user/petclinic/app.jar state=absent
 
     - name: link to the newly deployed app
-      file: path=/home/cloud-user/app.jar src=/home/cloud-user/app-.jar state=link
+      file: path=/home/cloud-user/petclinic/app.jar src=/home/cloud-user/petclinic/app-.jar state=link
 
     - name: stops running app
       sudo: yes
