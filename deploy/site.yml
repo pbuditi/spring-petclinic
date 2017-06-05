@@ -24,9 +24,3 @@
     - name: starts the app
       sudo: yes
       service: name=app state=started
-
-    - name: send notification message via slack
-      local_action:
-        module: slack
-        token: <your slack token>
-        msg: "app completed deployment."
