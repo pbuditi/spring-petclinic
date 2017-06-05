@@ -27,13 +27,11 @@
       file: path=/home/cloud-user/petclinic/app.jar src=/home/cloud-user/petclinic/app-.jar state=link
 
     - name: stops running app
-      shell: /home/cloud-user/petclinic/stop-app.sh
+      command: /bin/sh /home/cloud-user/petclinic/stop-app.sh
       args:
         chdir: /home/cloud-user/petclinic/
-      become: true
 
     - name: starts the app
-      shell: /home/cloud-user/petclinic/start-app.sh
+      shell: /bin/sh /home/cloud-user/petclinic/start-app.sh
       args:
         chdir: /home/cloud-user/petclinic/
-      become: true
