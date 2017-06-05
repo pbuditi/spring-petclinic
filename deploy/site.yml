@@ -38,7 +38,7 @@
     - name: Send notification message via Slack
       slack:
         token: xoxp-2179080664-169321284001-192831611058-04818f00e04313642c798e01ec733859
-         msg: 'petclinic-integration deployment completed: <http://192.168.0.210:8080/view/petclinic-project/job/petclinic_integration_deployment>'
+         msg: 'petclinic-integration deployment completed: http://192.168.0.210:8080/view/petclinic-project/job/petclinic_integration_deployment'
          channel: #devops-cloud-demo
          username: 'Ansible'
       delegate_to: localhost
