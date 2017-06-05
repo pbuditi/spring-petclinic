@@ -28,6 +28,7 @@ pipeline {
               withSonarQubeEnv('SonarQube') {
                  sh 'echo sonar'
               }
+          }
        }
   }
     post {
