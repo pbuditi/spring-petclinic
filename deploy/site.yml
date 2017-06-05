@@ -3,7 +3,7 @@
 
 - name: deploys the application
   hosts: all
-  remote_user: cloud-user
+  remote_user: ubuntu
   vars:
     timestamp: ""
 
