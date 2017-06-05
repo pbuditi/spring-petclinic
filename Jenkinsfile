@@ -24,11 +24,9 @@ pipeline {
             }
         }
         stage("SonarQube analysis") {
-            node {
               withSonarQubeEnv('SonarQube') {
                  sh 'echo sonar'
               }
-          }
        }
   }
     post {
