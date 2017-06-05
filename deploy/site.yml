@@ -27,13 +27,11 @@
       file: path=/home/cloud-user/petclinic/app.jar src=/home/cloud-user/petclinic/app-.jar state=link
 
     - name: stops running app
-      sudo: yes
       shell: /home/cloud-user/petclinic/stop-app.sh
       args:
         chdir: /home/cloud-user/petclinic/
 
     - name: starts the app
-      sudo: yes
       shell: /home/cloud-user/petclinic/start-app.sh
       args:
         chdir: /home/cloud-user/petclinic/
