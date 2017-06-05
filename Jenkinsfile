@@ -25,10 +25,10 @@ pipeline {
         }
         stage("SonarQube analysis") {
           // requires SonarQube Scanner 2.8+
-          //def scannerHome = tool 'SonarQube Scanner 2.8';
+          def scannerHome = tool 'sonar-runner;
            //def scannerHome = "/opt/sonar-runner-2.4"
             withSonarQubeEnv('SonarQube') {
-                sh "opt/sonar-runner-2.4/bin/sonar-scanner"
+                sh "${scannerHome}/bin/sonar-scanner"
            }
       }
   }
