@@ -4,7 +4,7 @@ pipeline {
         pollSCM("")
     }
     stages {
-        stage("Checkut") {
+        stage("Checkout") {
             steps {
                 checkout scm
             }
