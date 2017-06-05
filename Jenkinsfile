@@ -20,14 +20,13 @@ pipeline {
             steps {
                 script {
                     sh './mvnw test -B'
-                    junit 'target/surefire-reports/*.xml'
                 }
             }
         }
     }
     post {
         always {
-            junit '*/target/surefire-reports/*.xml'
+            junit 'target/surefire-reports/*.xml'
             archive "target/*.jar"
         }
     }
