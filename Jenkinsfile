@@ -24,9 +24,14 @@ pipeline {
             }
         }
         stage("SonarQube analysis") {
+            tools {
+                sonarQube 'SonarQube Scanner 2.8'
+            }
+            steps {
               withSonarQubeEnv('SonarQube') {
-                 sh 'echo sonar'
+                 sh 'sonar-scanner'
               }
+           }
        }
   }
     post {
