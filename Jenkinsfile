@@ -24,12 +24,9 @@ pipeline {
             }
         }
         stage("SonarQube analysis") {
-            tools {
-                sonarQube 'sonar-scanner'
-            }
             steps {
               withSonarQubeEnv('SonarQube') {
-                 sh 'sonar-scanner'
+                 sh '/opt/sonar-scanner-3.0.3.778-linux/bin/sonar-scanner'
               }
            }
        }
