@@ -24,10 +24,12 @@ pipeline {
             }
         }
         stage("SonarQube analysis") {
-            script {
-                   echo "SonarQube Analysis" 
+            steps {
+                script {
+                   echo "SonarQube Analysis" ;
+                }
             }
-      }
+       }
   }
     post {
         always {
