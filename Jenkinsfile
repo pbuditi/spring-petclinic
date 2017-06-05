@@ -24,11 +24,10 @@ pipeline {
             }
         }
         stage("SonarQube analysis") {
-            steps {
-                script {
-                   echo "SonarQube Analysis" ;
-                }
-            }
+            node {
+              withSonarQubeEnv('SonarQube') {
+                 sh 'echo sonar'
+              }
        }
   }
     post {
