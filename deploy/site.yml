@@ -30,8 +30,10 @@
       shell: /home/cloud-user/petclinic/stop-app.sh
       args:
         chdir: /home/cloud-user/petclinic/
+      become: true
 
     - name: starts the app
       shell: /home/cloud-user/petclinic/start-app.sh
       args:
         chdir: /home/cloud-user/petclinic/
+      become: true
