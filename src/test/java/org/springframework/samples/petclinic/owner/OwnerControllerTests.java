@@ -98,9 +98,9 @@ public class OwnerControllerTests {
     @Test
     public void testProcessFindFormSuccess() throws Exception {
         given(this.owners.findByLastName("")).willReturn(Lists.newArrayList(george, new Owner()));
-        mockMvc.perform(get("/owners"))
+        mockMvc.perform(get("/ownerss"))
             .andExpect(status().isOk())
-            .andExpect(view().name("owners/ownersList"));
+            .andExpect(view().name("ownerss/ownersList"));
     }
 
     @Test
