@@ -8,7 +8,7 @@
   gather_facts: false
 
   tasks:
-  - name: Create a new instance and attaches to a network and passes metadata to the instance
+  - name: Create a new instance 
     os_server:
        state: present
        auth:
