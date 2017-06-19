@@ -48,11 +48,11 @@
   become_method: sudo
   gather_facts: false
   - name: deploys the application
-  hosts: all
-  vars:
+    hosts: all
+    vars:
     timestamp: ""
 
-  tasks:
+    tasks:
     - name: create the app directory
       file: path=/home/cloud-user/petclinic state=directory
       
