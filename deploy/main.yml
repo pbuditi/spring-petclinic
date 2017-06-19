@@ -17,7 +17,7 @@
          password: password
          project_name: fintech
          domain_name: default
-       name: "{{application}}_{{ environment }}"
+       name: "{{app_name}}_{{ app_env }}"
        availability_zone: nova
        image: 7e9a5b89-a071-4ae7-8d84-b004e4630997
        key_name: pradeep
