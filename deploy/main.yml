@@ -77,9 +77,9 @@
       chdir: /home/cloud-user/petclinic/
 
   - name: starts the app
-     shell: /bin/sh /home/cloud-user/petclinic/start-app.sh
-     args:
-        chdir: /home/cloud-user/petclinic/
+    shell: /bin/sh /home/cloud-user/petclinic/start-app.sh
+    args:
+       chdir: /home/cloud-user/petclinic/
         
   - name: Send notification message via Slack all options
     slack:
