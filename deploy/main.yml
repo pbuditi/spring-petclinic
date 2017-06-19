@@ -47,15 +47,42 @@
   become: yes
   become_method: sudo
   gather_facts: false
+  - name: deploys the application
+  hosts: all
+  vars:
+    timestamp: ""
+
   tasks:
-    - name: "Wait for Cloud init to complete"
-      local_action: wait_for port=22 host="{{ inventory_hostname }}" search_regex=OpenSSH delay=5
-      become: False
+    - name: create the app directory
+      file: path=/home/cloud-user/petclinic state=directory
       
-    - name: ensure apache is at the latest version
-      apt: name=apache2 state=latest
-      notify:
-        - restart apache2
-  handlers:
-    - name: restart apache2
-      service: name=apache2 state=restarted
+    - name: copies the startup script
+      copy: src=start-app.sh dest=/home/cloud-user/petclinic
+      
+    - name: copies the stop script
+      copy: src=stop-app.sh dest=/home/cloud-user/petclinic
+      
+    - name: copies the jar file over
+      copy: src=../target/app.jar dest=/home/cloud-user/petclinic/app-.jar
+
+    - name: unlink the current app
+      file: path=/home/cloud-user/petclinic/app.jar state=absent
+
+    - name: link to the newly deployed app
+      file: path=/home/cloud-user/petclinic/app.jar src=/home/cloud-user/petclinic/app-.jar state=link
+
+    - name: stops running app
+      command: /bin/sh /home/cloud-user/petclinic/stop-app.sh
+      args:
+        chdir: /home/cloud-user/petclinic/
+
+    - name: starts the app
+      shell: /bin/sh /home/cloud-user/petclinic/start-app.sh
+      args:
+        chdir: /home/cloud-user/petclinic/
+        
+    - name: Send notification message via Slack all options
+      slack:
+        token: "T02592CKJ/B5NSGD0Q4/HVtCwONm8vSrFayNVOLZnudT"
+        msg: "petclinic-integration deployment completed: http://{{ inventory_hostname }}:8099"
+        username: 'PaloIT DevOps'
