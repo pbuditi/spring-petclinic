@@ -28,7 +28,13 @@
          - net-id: af40bd17-70a4-41cb-801c-f7fe4f4bafb3
          - net-name: provider
        meta:
-         hostname: ansible_provisioning_test 
+         hostname: ansible_provisioning_test
+       userdata: |
+          {%- raw -%}#!/bin/bash
+          apt-get update && sudo apt-get upgrade
+          apt-get install -y python
+          apt-get install -y default-jre
+          {% endraw %}
     register: newnodes
 
   - name: Add  Instance to Inventory
