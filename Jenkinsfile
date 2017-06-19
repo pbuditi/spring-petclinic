@@ -16,6 +16,13 @@ pipeline {
                 }
             }
         }
+       stage("qa") {
+            steps {
+                script {
+                    ansiblePlaybook credentialsId: 'pradeep-cloud-user', extras: 'app_env=qa app_name=demo', playbook: 'deploy/main.yml', sudoUser: null
+                }
+            }
+        }
   }
     post {
         always {
