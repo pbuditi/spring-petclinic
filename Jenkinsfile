@@ -4,14 +4,10 @@ pipeline {
         pollSCM("")
     }
     stages {
-        stage("Checkout") {
-            steps {
-                checkout scm
-            }
-        }
         stage("Build") {
             steps {
                 script {
+                    checkout scm
                     sh './mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V'
                     sh './mvnw test -B'
                 }
