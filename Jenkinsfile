@@ -19,7 +19,7 @@ pipeline {
        stage("qa") {
             steps {
                 script {
-                    ansiblePlaybook credentialsId: 'pradeep-cloud-user', extras: 'app_env=qa app_name=demo', playbook: 'deploy/main.yml', sudoUser: null
+                    ansiblePlaybook credentialsId: 'pradeep-cloud-user', extras: '-e app_env=qa -e app_name=demo', playbook: 'deploy/main.yml', sudoUser: null
                 }
             }
         }
