@@ -4,6 +4,7 @@
 - name: deploys the application
   hosts: localhost
   connection: local
+  become: false
   gather_facts: false
 
   tasks:
