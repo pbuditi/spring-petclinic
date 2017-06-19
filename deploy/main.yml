@@ -1,0 +1,50 @@
+---
+# connector deployment
+
+- name: deploys the application
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+  - name: Create a new instance and attaches to a network and passes metadata to the instance
+    os_server:
+       state: present
+       auth:
+         auth_url: http://192.168.0.140:35357/v3
+         username: pbuditi
+         password: password
+         project_name: fintech
+         domain_name: default
+       name: ansible_provisioning_test
+       availability_zone: nova
+       image: 7e9a5b89-a071-4ae7-8d84-b004e4630997
+       key_name: pradeep
+       security_groups: default
+       timeout: 200
+       flavor: 130402d3-ab31-4072-8cf4-894c6362fe01
+       nics:
+         - net-id: af40bd17-70a4-41cb-801c-f7fe4f4bafb3
+         - net-name: provider
+       meta:
+         hostname: ansible_provisioning_test 
+    register: newnodes
+
+  - name: Add  Instance to Inventory
+    add_host: name={{ newnodes.server.public_v4 }}
+        groups=created_nodes
+        ansible_user=ubuntu
+        instance_name={{ newnodes.server.name }}
+
+- hosts: created_nodes
+  become: yes
+  become_method: sudo
+  gather_facts: false
+  tasks:
+    - name: ensure apache is at the latest version
+      apt: name=apache2 state=latest
+      notify:
+        - restart apache2
+  handlers:
+    - name: restart apache2
+      service: name=apache2 state=restarted
