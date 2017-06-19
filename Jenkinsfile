@@ -13,23 +13,13 @@ pipeline {
             steps {
                 script {
                     sh './mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V'
-                }
-            }
-        }
-        stage("Test") {
-            steps {
-                script {
                     sh './mvnw test -B'
                 }
+                withSonarQubeEnv('SonarQube') {
+                 sh '/opt/sonar-scanner-3.0.3.778-linux/bin/sonar-scanner'
+                }
             }
         }
-        stage("SonarQube analysis") {
-            steps {
-              withSonarQubeEnv('SonarQube') {
-                 sh '/opt/sonar-scanner-3.0.3.778-linux/bin/sonar-scanner'
-              }
-           }
-       }
   }
     post {
         always {
