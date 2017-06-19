@@ -48,6 +48,10 @@
   become_method: sudo
   gather_facts: false
   tasks:
+    - name: "Wait for Cloud init to complete"
+      local_action: wait_for port=22 host="{{ newnodes.server.name }}" search_regex="Reached target Cloud-init" delay=15
+      become: False
+      
     - name: ensure apache is at the latest version
       apt: name=apache2 state=latest
       notify:
