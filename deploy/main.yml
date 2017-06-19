@@ -17,7 +17,7 @@
          password: password
          project_name: fintech
          domain_name: default
-       name: ansible_provisioning_test
+       name: "{{application}}_{{ environment }}"
        availability_zone: nova
        image: 7e9a5b89-a071-4ae7-8d84-b004e4630997
        key_name: pradeep
@@ -28,7 +28,7 @@
          - net-id: af40bd17-70a4-41cb-801c-f7fe4f4bafb3
          - net-name: provider
        meta:
-         hostname: ansible_provisioning_test
+         hostname: "{{application}}_{{ environment }}"
        userdata: |
           {%- raw -%}#!/bin/bash
           apt-get update && sudo apt-get upgrade
