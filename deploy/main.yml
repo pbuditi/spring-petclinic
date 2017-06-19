@@ -63,13 +63,13 @@
     copy: src=stop-app.sh dest=/home/cloud-user/petclinic
       
   - name: copies the jar file over
-    copy: src=../target/app.jar dest=/home/cloud-user/petclinic/app-.jar
+    copy: src=../target/spring-petclinic-1.0-SNAPSHOT.jar dest=/home/cloud-user/petclinic/spring-petclinic-1.0-SNAPSHOT-.jar
 
   - name: unlink the current app
-    file: path=/home/cloud-user/petclinic/app.jar state=absent
+    file: path=/home/cloud-user/petclinic/spring-petclinic-1.0-SNAPSHOT.jar state=absent
 
   - name: link to the newly deployed app
-    file: path=/home/cloud-user/petclinic/app.jar src=/home/cloud-user/petclinic/app-.jar state=link
+    file: path=/home/cloud-user/petclinic/spring-petclinic-1.0-SNAPSHOT.jar src=/home/cloud-user/petclinic/spring-petclinic-1.0-SNAPSHOT-.jar state=link
 
   - name: stops running app
     command: /bin/sh /home/cloud-user/petclinic/stop-app.sh
