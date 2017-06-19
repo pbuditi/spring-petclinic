@@ -1,0 +1,42 @@
+---
+# connector deployment
+
+- name: deploys the application
+  hosts: web
+  vars:
+    timestamp: ""
+
+  tasks:
+    - name: create the app directory
+      file: path=/home/cloud-user/petclinic state=directory
+      
+    - name: copies the startup script
+      copy: src=start-app.sh dest=/home/cloud-user/petclinic
+      
+    - name: copies the stop script
+      copy: src=stop-app.sh dest=/home/cloud-user/petclinic
+      
+    - name: copies the jar file over
+      copy: src=../target/app.jar dest=/home/cloud-user/petclinic/app-.jar
+
+    - name: unlink the current app
+      file: path=/home/cloud-user/petclinic/app.jar state=absent
+
+    - name: link to the newly deployed app
+      file: path=/home/cloud-user/petclinic/app.jar src=/home/cloud-user/petclinic/app-.jar state=link
+
+    - name: stops running app
+      command: /bin/sh /home/cloud-user/petclinic/stop-app.sh
+      args:
+        chdir: /home/cloud-user/petclinic/
+
+    - name: starts the app
+      shell: /bin/sh /home/cloud-user/petclinic/start-app.sh
+      args:
+        chdir: /home/cloud-user/petclinic/
+        
+    - name: Send notification message via Slack all options
+      slack:
+        token: "T02592CKJ/B5NSGD0Q4/HVtCwONm8vSrFayNVOLZnudT"
+        msg: "{{ app_name }}-{{app_env}} deployment completed: http://{{ inventory_hostname }}:8099"
+        username: 'PaloIT DevOps'
