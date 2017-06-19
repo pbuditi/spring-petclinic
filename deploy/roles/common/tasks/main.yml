@@ -1,0 +1,5 @@
+---
+# This playbook contains common plays that will be run on all nodes.
+
+- name: placeholder 
+  shell: echo 'placeholder for common tasks
