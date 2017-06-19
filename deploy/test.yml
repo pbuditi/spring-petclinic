@@ -1,11 +1,15 @@
 ---
 # Load Test
 
-# Run JMeter tests using Ansible shell module on remote Jmeter node
-- name: Run JMeter tests using Ansible
+- name: deploys the application
   hosts: created_nodes
-  shell: "sudo /opt/apache-jmeter-3.2/bin/jmeter.sh -n -t src/test/jmeter/petclinic_test_plan.jmx -JPETCLINIC_HOST={{ inventory_hostname }}-JPETCLINIC_PORT=8099 -Jjmeter.save.saveservice.output_format=xml  -l petclinic_test_plan.jtl"
+  gather_facts: false
+
+# Run JMeter tests using Ansible shell module on remote Jmeter node
+  tasks:
+  - name: Run JMeter tests using Ansible
+    shell: "sudo /opt/apache-jmeter-3.2/bin/jmeter.sh -n -t src/test/jmeter/petclinic_test_plan.jmx -JPETCLINIC_HOST={{ inventory_hostname }}-JPETCLINIC_PORT=8099 -Jjmeter.save.saveservice.output_format=xml  -l petclinic_test_plan.jtl"
 
 # Fetch JMeter test(s) result .jtl file(s) from remote server and put it in local workspace.
-- name: Fetch JMeter test(s) result .jtl file(s)
-  fetch: src="petclinic_test_plan.jtl" dest="perf_tests/petclinic_test_plan.jtl" flat=yes fail_on_missing=yes
+  - name: Fetch JMeter test(s) result .jtl file(s)
+    fetch: src="petclinic_test_plan.jtl" dest="perf_tests/petclinic_test_plan.jtl" flat=yes fail_on_missing=yes
