@@ -50,7 +50,7 @@
   gather_facts: false
 
   vars:
-  timestamp: ""
+    timestamp: ""
 
   tasks:
   - name: create the app directory
@@ -84,5 +84,5 @@
   - name: Send notification message via Slack all options
     slack:
        token: "T02592CKJ/B5NSGD0Q4/HVtCwONm8vSrFayNVOLZnudT"
-       msg: "petclinic-integration deployment completed: http://{{ inventory_hostname }}:8099"
+       msg: "{{ app_name }}-{{ app_env }} deployment completed: http://{{ inventory_hostname }}:8099"
        username: 'PaloIT DevOps'
