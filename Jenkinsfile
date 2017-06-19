@@ -24,6 +24,13 @@ pipeline {
                 }
             }
         }
+        stage("staging") {
+            steps {
+                script {
+                    ansiblePlaybook credentialsId: 'pradeep-cloud-user', extras: '-e app_env=qa -e app_name=demo', playbook: 'deploy/main.yml', sudoUser: null
+                }
+            }
+        }
   }
     post {
         always {
