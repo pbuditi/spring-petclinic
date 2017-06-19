@@ -3,7 +3,6 @@
 
 - name: deploys the application
   hosts: created_nodes
-  gather_facts: false
 
 # Run JMeter tests using Ansible shell module on remote Jmeter node
   tasks:
