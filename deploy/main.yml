@@ -28,7 +28,7 @@
          - net-id: af40bd17-70a4-41cb-801c-f7fe4f4bafb3
          - net-name: provider
        meta:
-         hostname: "{{application}}_{{ environment }}"
+         hostname: "{{app_name}}_{{ app_env }}"
        userdata: |
           {%- raw -%}#!/bin/bash
           apt-get update && sudo apt-get upgrade
