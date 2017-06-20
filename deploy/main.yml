@@ -88,4 +88,4 @@
     slack:
        token: "T02592CKJ/B5NSGD0Q4/HVtCwONm8vSrFayNVOLZnudT"
        msg: "{{ app_name }}-{{ app_env }} version {{ app_ver }} deployed: http://{{ inventory_hostname }}:8099"
-       username: 'PaloIT DevOps'
+       username: 'PaloIT DevOps Comms'
