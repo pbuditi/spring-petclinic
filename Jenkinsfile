@@ -27,7 +27,7 @@ pipeline {
         stage("staging") {
             steps {
                 script {
-                    ansiblePlaybook credentialsId: 'pradeep-cloud-user', extras: "-e app_env=stagig -e app_name=petclinic app_ver=${env.BUILD_NUMBER}", playbook: 'deploy/main.yml', sudoUser: null
+                    ansiblePlaybook credentialsId: 'pradeep-cloud-user', extras: "-e app_env=staging -e app_name=petclinic -e app_ver=${env.BUILD_NUMBER}", playbook: 'deploy/main.yml', sudoUser: null
                 }
             }
         }
