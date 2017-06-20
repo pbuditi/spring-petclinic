@@ -63,6 +63,7 @@
       delay: 10 
       timeout: 320 
       state: started
+    become: False
       
   - name: create the app directory
     file: path=/home/cloud-user/petclinic state=directory
