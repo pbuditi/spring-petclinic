@@ -55,16 +55,7 @@
     timestamp: ""
 
   tasks:
-  - name: "Wait for SSH"
-    local_action: 
-      module: wait_for 
-      host: "{{ inventory_hostname }}"
-      port: 22 
-      delay: 10 
-      timeout: 320 
-      state: started
-    become: False
-      
+
   - name: create the app directory
     file: path=/home/cloud-user/petclinic state=directory
       
@@ -96,5 +87,5 @@
   - name: Send notification message via Slack all options
     slack:
        token: "T02592CKJ/B5NSGD0Q4/HVtCwONm8vSrFayNVOLZnudT"
-       msg: "{{ app_name }}-{{ app_env }} deployment completed: http://{{ inventory_hostname }}:8099"
+       msg: "{{ app_name }}-{{ app_env }} version {{ app_version }} deployed: http://{{ inventory_hostname }}:8099"
        username: 'PaloIT DevOps'
