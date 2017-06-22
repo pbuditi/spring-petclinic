@@ -26,10 +26,4 @@
        flavor: 56a36b22-cc3d-421e-b54b-29b33525fad3
        meta:
          hostname: "{{app_name}}_{{ app_env }}"
-       userdata: |
-          {%- raw -%}#!/bin/bash
-          apt-get update && sudo apt-get upgrade
-          apt-get install -y python
-          apt-get install -y default-jre
-          {% endraw %}
     register: newnodes
