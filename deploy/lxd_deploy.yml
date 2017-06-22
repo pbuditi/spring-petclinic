@@ -20,7 +20,7 @@
        name: "{{app_name}}_{{ app_env }}"
        availability_zone: LXD
        image: 17e810a0-672c-42ba-a719-0ecdf26020ab
-       key_name: mypubkey
+       key_name: pradeep
        security_groups: default
        timeout: 200
        flavor: 56a36b22-cc3d-421e-b54b-29b33525fad3
