@@ -19,7 +19,7 @@ pipeline {
        stage("qa") {
             steps {
                 script {
-                    ansiblePlaybook credentialsId: 'pradeep-cloud-user', extras: "-e app_env=qa -e app_name=petclinic -e app_ver=${env.BUILD_NUMBER}", playbook: 'deploy/main.yml', sudoUser: null
+                    ansiblePlaybook credentialsId: 'pradeep-cloud-user', extras: "-e app_env=qa-lxd -e app_name=petclinic -e app_ver=${env.BUILD_NUMBER}", playbook: 'deploy/lxd_deploy.yml', sudoUser: null
                     ansiblePlaybook credentialsId: 'pradeep-cloud-user', playbook: 'deploy/test.yml', sudoUser: null
                 }
             }
@@ -27,7 +27,7 @@ pipeline {
         stage("staging") {
             steps {
                 script {
-                    ansiblePlaybook credentialsId: 'pradeep-cloud-user', extras: "-e app_env=staging -e app_name=petclinic -e app_ver=${env.BUILD_NUMBER}", playbook: 'deploy/main.yml', sudoUser: null
+                    ansiblePlaybook credentialsId: 'pradeep-cloud-user', extras: "-e app_env=staging-lxd -e app_name=petclinic -e app_ver=${env.BUILD_NUMBER}", playbook: 'deploy/lxd_deploy.yml', sudoUser: null
                 }
             }
         }

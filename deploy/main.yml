@@ -8,7 +8,7 @@
   gather_facts: false
 
   tasks:
-  - name: Create a new instance 
+  - name: Create a new instance
     os_server:
        state: present
        auth:
@@ -42,7 +42,7 @@
         groups=created_nodes
         ansible_user=ubuntu
         instance_name={{ newnodes.server.name }}
-        
+
   - set_fact: var_hostname="{{ newnodes.server.name }}" var_hostip="{{ newnodes.server.public_v4 }}"
 
 - name: deploys the application
@@ -50,21 +50,24 @@
   become: yes
   become_method: sudo
   gather_facts: false
-      
+
   vars:
     timestamp: ""
 
   tasks:
+  - name: "Wait for SSH open"
+     local_action: wait_for port=22 host="{{ inventory_hostname }}" search_regex=OpenSSH delay=30
+     become: False
 
   - name: create the app directory
     file: path=/home/cloud-user/petclinic state=directory
-      
+
   - name: copies the startup script
     copy: src=start-app.sh dest=/home/cloud-user/petclinic
-      
+
   - name: copies the stop script
     copy: src=stop-app.sh dest=/home/cloud-user/petclinic
-      
+
   - name: copies the jar file over
     copy: src=../target/spring-petclinic-1.0-SNAPSHOT.jar dest=/home/cloud-user/petclinic/spring-petclinic-1.0-SNAPSHOT-.jar
 
@@ -83,7 +86,7 @@
     shell: /bin/sh /home/cloud-user/petclinic/start-app.sh
     args:
        chdir: /home/cloud-user/petclinic/
-        
+
   - name: Send notification message via Slack all options
     slack:
        token: "T02592CKJ/B5NSGD0Q4/HVtCwONm8vSrFayNVOLZnudT"
