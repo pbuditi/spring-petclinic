@@ -1,0 +1,88 @@
+---
+# connector deployment
+
+- name: deploys the application
+  hosts: localhost
+  connection: local
+  become: false
+  gather_facts: false
+
+  tasks:
+  - name: Create a new instance
+    os_server:
+       state: present
+       auth:
+         auth_url: http://192.168.0.140:35357/v3
+         username: demo
+         password: demo
+         project_name: demo
+         domain_name: default
+       name: "{{app_name}}_{{ app_env }}"
+       availability_zone: LXD
+       image: 17e810a0-672c-42ba-a719-0ecdf26020ab
+       key_name: mypubkey
+       security_groups: default
+       timeout: 200
+       flavor: 56a36b22-cc3d-421e-b54b-29b33525fad3
+       meta:
+         hostname: "{{app_name}}_{{ app_env }}"
+       userdata: |
+          {%- raw -%}#!/bin/bash
+          apt-get update && sudo apt-get upgrade
+          apt-get install -y python
+          apt-get install -y default-jre
+          {% endraw %}
+    register: newnodes
+
+  - name: Add  Instance to Inventory
+    add_host: name={{ newnodes.server.public_v4 }}
+        groups=created_nodes
+        ansible_user=ubuntu
+        instance_name={{ newnodes.server.name }}
+
+  - set_fact: var_hostname="{{ newnodes.server.name }}" var_hostip="{{ newnodes.server.public_v4 }}"
+
+- name: deploys the application
+  hosts: created_nodes
+  become: yes
+  become_method: sudo
+  gather_facts: false
+
+  vars:
+    timestamp: ""
+
+  tasks:
+
+  - name: create the app directory
+    file: path=/home/cloud-user/petclinic state=directory
+
+  - name: copies the startup script
+    copy: src=start-app.sh dest=/home/cloud-user/petclinic
+
+  - name: copies the stop script
+    copy: src=stop-app.sh dest=/home/cloud-user/petclinic
+
+  - name: copies the jar file over
+    copy: src=../target/spring-petclinic-1.0-SNAPSHOT.jar dest=/home/cloud-user/petclinic/spring-petclinic-1.0-SNAPSHOT-.jar
+
+  - name: unlink the current app
+    file: path=/home/cloud-user/petclinic/spring-petclinic-1.0-SNAPSHOT.jar state=absent
+
+  - name: link to the newly deployed app
+    file: path=/home/cloud-user/petclinic/spring-petclinic-1.0-SNAPSHOT.jar src=/home/cloud-user/petclinic/spring-petclinic-1.0-SNAPSHOT-.jar state=link
+
+  - name: stops running app
+    command: /bin/sh /home/cloud-user/petclinic/stop-app.sh
+    args:
+      chdir: /home/cloud-user/petclinic/
+
+  - name: starts the app
+    shell: /bin/sh /home/cloud-user/petclinic/start-app.sh
+    args:
+       chdir: /home/cloud-user/petclinic/
+
+  - name: Send notification message via Slack all options
+    slack:
+       token: "T02592CKJ/B5NSGD0Q4/HVtCwONm8vSrFayNVOLZnudT"
+       msg: "{{ app_name }}-{{ app_env }} version {{ app_ver }} deployed: http://{{ inventory_hostname }}:8099"
+       username: 'PaloIT DevOps Comms'
