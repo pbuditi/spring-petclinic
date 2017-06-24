@@ -44,9 +44,9 @@
     timestamp: ""
 
   tasks:
-  - name: "Wait for SSH open"
-     local_action: wait_for port=22 host="{{ inventory_hostname }}" search_regex="OpenSSH" delay=15
-     become: False
+  - name: "Wait for SSH banners"
+    local_action: wait_for port=22 host="{{ inventory_hostname }}" search_regex=OpenSSH delay=5
+    become: False
 
   - name: create the app directory
     file: path=/home/cloud-user/petclinic state=directory
