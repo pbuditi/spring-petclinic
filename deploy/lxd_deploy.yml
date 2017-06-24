@@ -28,6 +28,12 @@
          hostname: "{{app_name}}_{{ app_env }}"
     register: newnodes
 
+  - name: Add  Instance to Inventory
+    add_host: name={{ newnodes.server.public_v4 }}
+      groups=created_nodes
+      ansible_user=ubuntu
+      instance_name={{ newnodes.server.name }}
+
 - name: deploys the application
   hosts: created_nodes
   become: yes
@@ -39,7 +45,7 @@
 
   tasks:
   - name: "Wait for SSH open"
-     local_action: wait_for port=22 host="{{ inventory_hostname }}" search_regex=OpenSSH delay=30
+     local_action: wait_for port=22 host="{{ inventory_hostname }}" search_regex="OpenSSH" delay=15
      become: False
 
   - name: create the app directory
