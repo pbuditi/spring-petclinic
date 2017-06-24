@@ -19,9 +19,11 @@
          domain_name: default
        name: "{{app_name}}_{{ app_env }}"
        availability_zone: LXD
-       image: 17e810a0-672c-42ba-a719-0ecdf26020ab
+       image: f274c084-0a90-43d0-a288-dd15d33bb523
        key_name: pradeep
        security_groups: default
        timeout: 200
        flavor: 56a36b22-cc3d-421e-b54b-29b33525fad3
+       meta:
+         hostname: "{{app_name}}_{{ app_env }}"
     register: newnodes
